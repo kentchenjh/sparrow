@@ -11,6 +11,7 @@ import java.util.Set;
 import com.sparrow.anno.Bean;
 import com.sparrow.kit.FileKit;
 import com.sparrow.kit.ReflectKit;
+import com.sparrow.kit.StringKit;
 
 public class Scanner {
 
@@ -21,6 +22,7 @@ public class Scanner {
 	public static Set<ClassInfo> scan(String packageName) {
 	
 		Set<ClassInfo> classInfos = new HashSet<>();
+		if(StringKit.isEmpty(packageName)) return classInfos;
 		
 		String root = FileKit.getPath(packageName);
 		try {

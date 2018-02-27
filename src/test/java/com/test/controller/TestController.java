@@ -20,7 +20,6 @@ public class TestController {
 	@Path("/home")
 	@JSON
 	public String homepage() {
-		
 		return "This is homepage";
 	} 
 	

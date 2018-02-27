@@ -182,8 +182,9 @@ public class Sparrow {
 		return this;
 	}
 	
-	public void addPackages(String... packages) {
+	public Sparrow addPackages(String... packages) {
 		this.packages.addAll(Arrays.asList(packages));
+		return this;
 	}
 	
 	public Sparrow addConfig(String config) {

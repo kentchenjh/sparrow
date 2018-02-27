@@ -15,5 +15,4 @@ public class ModifyHook implements WebHook{
 		
 		return true;
 	}
-
 }
