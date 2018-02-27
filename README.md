@@ -52,14 +52,12 @@ public class SayHiHook implements WebHook{
 
 	@Override
 	public boolean before(Signature signature) {
-		
 		System.out.println("before");
 		return true;
 	}
 
 	@Override
 	public boolean after(Signature signature) {
-		
 		System.out.println("after");
 		return true;
 	}
@@ -72,9 +70,7 @@ public class ModifyHook implements WebHook{
 
 	@Override
 	public boolean before(Signature signature) {
-		
 		System.out.println("modfiy hook before");
-		
 		return true;
 	}
 }
