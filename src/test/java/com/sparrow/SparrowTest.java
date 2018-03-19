@@ -19,23 +19,23 @@ public class SparrowTest {
 	public void testStart() {
 //		Sparrow.me().addPackages("com.test").start();
 //		
-//		Sparrow.me().addConfig("app.properties").start();
+		Sparrow.me().addConfig("app.properties").start().await();
 		
 		
-		Sparrow.me().get("/", new RouteHandler() {
-			
-			@Override
-			public void handle(HttpServletRequest request, HttpServletResponse response) {
-				PrintWriter writer = null;
-				try {
-					writer = response.getWriter();
-					writer.write("welcome");
-				} catch (IOException e) {
-					e.printStackTrace();
-					IOKit.closeQuietly(writer);
-				}
-			}
-		}).start();
+//		Sparrow.me().get("/", new RouteHandler() {
+//			
+//			@Override
+//			public void handle(HttpServletRequest request, HttpServletResponse response) {
+//				PrintWriter writer = null;
+//				try {
+//					writer = response.getWriter();
+//					writer.write("welcome");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//					IOKit.closeQuietly(writer);
+//				}
+//			}
+//		}).start();
 	}
 	
 //	@Test

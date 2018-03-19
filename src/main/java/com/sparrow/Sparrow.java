@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -66,6 +67,8 @@ public class Sparrow {
 	private Set<String> statics = new HashSet<>(Const.DEFAULT_STATICS);
 	
 	private Set<String> configs = new HashSet<>(Const.CONFIG_PATH);
+	
+	private CountDownLatch latch = new CountDownLatch(1);
 	
 	private Sparrow() {};
 	
@@ -146,7 +149,10 @@ public class Sparrow {
 		}
 		
 		//injection for loaded beans
-		ioc.getClassInfos().stream().forEach(classInfo -> IocKit.injection(ioc, classInfo));
+		ioc.getClassInfos().stream().forEach(classInfo -> {
+			IocKit.refInjection(ioc, classInfo);
+			IocKit.valueInjection(ioc, env, classInfo);
+		});
 		
 		log.info("ioc container content: {}", ioc.getBeans());
 	}
@@ -192,13 +198,23 @@ public class Sparrow {
 		return this;
 	}
 	
-	public void start() {
+	public Sparrow start() {
+		init();
+		new Thread(() -> {
+			try {
+				JettyServer.instance(Sparrow.this).start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}).start();
+		return this;
+	}
+	
+	public void await() {
 		try {
-			init();
-			JettyServer.instance(this).start();
-		} catch (Exception e) {
+			latch.await();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
 }

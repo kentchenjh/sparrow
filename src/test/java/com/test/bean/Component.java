@@ -2,17 +2,19 @@ package com.test.bean;
 
 import com.sparrow.anno.Autowired;
 import com.sparrow.anno.Bean;
+import com.sparrow.anno.Value;
 import com.test.controller.TestController;
 
-@Bean
+import lombok.Data;
+
+@Bean("component")
+@Data
 public class Component {
 
+	@Value(name="app.version")
+	String version;
+	
 	@Autowired
 	TestController controller;
-
-	@Override
-	public String toString() {
-		return "Component [controller=" + controller + "]";
-	}
 	
 }

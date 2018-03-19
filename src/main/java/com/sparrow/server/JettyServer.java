@@ -4,6 +4,7 @@ import static com.sparrow.Const.DEFAULT_SERVER_PORT;
 import static com.sparrow.Const.ENV_KEY_SERVER_PORT;
 
 import java.io.File;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -31,11 +32,14 @@ public class JettyServer implements Server{
 	
 	private Env env;
 	
+	private CountDownLatch latch;
+	
 	private JettyServer() {};
 	
 	private JettyServer(Sparrow sparrow) {
 		this.sparrow = sparrow;
 		this.env = sparrow.getEnv();
+		this.latch = sparrow.getLatch();
 	}
 	
 	public static JettyServer instance(Sparrow sparrow) {
@@ -83,6 +87,7 @@ public class JettyServer implements Server{
         server.setConnectors(new Connector[]{connector});
         
 		server.start();
+		latch.countDown();
 		server.join();
 	}
 	
