@@ -70,6 +70,8 @@ public class Sparrow {
 	
 	private CountDownLatch latch = new CountDownLatch(1);
 	
+	private JettyServer server;
+	
 	private Sparrow() {};
 	
 	public static Sparrow me() {
@@ -133,7 +135,7 @@ public class Sparrow {
 	private void initConfig() {
 		//load config file
 		env.of(configs);
-		
+		//add base packages
 		packages.add(env.get(Const.BASE_PACKAGE, ""));
 	}
 
@@ -202,7 +204,8 @@ public class Sparrow {
 		init();
 		new Thread(() -> {
 			try {
-				JettyServer.instance(Sparrow.this).start();
+				server = JettyServer.instance(Sparrow.this);
+				server.start();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -213,8 +216,13 @@ public class Sparrow {
 	public void await() {
 		try {
 			latch.await();
+			System.out.println("await...");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void shutdown() {
+		server.stop();
 	}
 }

@@ -8,7 +8,7 @@ import com.sparrow.route.Route;
 public class SimpleControllerAdapter implements RouteAdapter {
 
 	@Override
-	public Object handle(Signature signature) {
+	public Object handle(Signature signature) throws Exception {
 		Route route = signature.getRoute();
 		Object result = ReflectKit.invoke(route.getTarget(), route.getAction(), signature.getParams());
 		return result;

@@ -36,6 +36,8 @@ public class JettyServer implements Server{
 	
 	private JettyServer() {};
 	
+	private org.eclipse.jetty.server.Server jettyServer;
+	
 	private JettyServer(Sparrow sparrow) {
 		this.sparrow = sparrow;
 		this.env = sparrow.getEnv();
@@ -62,12 +64,12 @@ public class JettyServer implements Server{
         				0, TimeUnit.MILLISECONDS, 
         				new LinkedBlockingQueue<Runnable>()));
 		
-		org.eclipse.jetty.server.Server server = new org.eclipse.jetty.server.Server(pool);
+        jettyServer = new org.eclipse.jetty.server.Server(pool);
 		
 		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		context.setResourceBase(pwdPath);
         context.setContextPath("/");
-        server.setHandler(context);
+        jettyServer.setHandler(context);
 		
         String staticPath = Const.CLASS_PATH + File.separator + "static";//HACK
         
@@ -82,13 +84,20 @@ public class JettyServer implements Server{
         context.addServlet(holderDynamic, "/");
         
         //set connector
-        ServerConnector connector = new ServerConnector(server);
+        ServerConnector connector = new ServerConnector(jettyServer);
         connector.setPort(port);
-        server.setConnectors(new Connector[]{connector});
+        jettyServer.setConnectors(new Connector[]{connector});
         
-		server.start();
-		latch.countDown();
-		server.join();
+        jettyServer.start();
+        latch.countDown();
+        jettyServer.join();
 	}
 	
+	public void stop() {
+		try {
+			jettyServer.stop();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

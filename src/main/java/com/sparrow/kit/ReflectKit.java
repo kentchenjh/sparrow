@@ -5,6 +5,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReflectKit {
 
-	public static Object invoke(Object object, Method method, Object[] params) {
+	public static Object invoke(Object object, Method method, Object[] params) throws Exception {
 		
 		if(null == object || null == method) return null;
 		
 		method.setAccessible(true);
 		Object result;
-		try {
-			result = method.invoke(object, params);
-		} catch (Exception e) {
-			return null;
-		}
+		result = method.invoke(object, params);
+		
 		return result;
 	}
 	

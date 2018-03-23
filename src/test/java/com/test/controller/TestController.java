@@ -23,6 +23,11 @@ public class TestController {
 		return "This is homepage";
 	} 
 	
+	@Path("/exception")
+	public String exception() throws Exception {
+		throw new Exception("This is exception page");
+	}
+	
 	@Path("/count")
 	@JSON
 	public String count() {

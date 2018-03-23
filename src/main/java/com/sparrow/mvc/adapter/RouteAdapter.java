@@ -5,7 +5,7 @@ import com.sparrow.route.Route;
 
 public interface RouteAdapter {
 
-	Object handle(Signature signature);
+	Object handle(Signature signature) throws Exception;
 	
 	boolean support(Route route);
 }

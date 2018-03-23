@@ -1,6 +1,7 @@
 package com.sparrow.mvc.request;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -78,7 +79,7 @@ public class RequestExecution {
 			//handle result
 			this.processResult(signature, result);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (e instanceof InvocationTargetException) e = (Exception) e.getCause();
 			EXCEPTION_HANDLER.handleException(e, signature);
 		}
 	}
@@ -104,7 +105,7 @@ public class RequestExecution {
 		throw new RuntimeException("no adapter for " + route);
 	}
 
-	private boolean invokeHook(String path, Signature signature, HttpMethod httpMethod) {
+	private boolean invokeHook(String path, Signature signature, HttpMethod httpMethod) throws Exception {
 
 		List<Route> hooks = ROUTE_MANAGER.findHook(path, httpMethod);
 		for(Route hook : hooks) {

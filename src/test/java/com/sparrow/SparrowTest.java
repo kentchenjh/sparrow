@@ -2,25 +2,27 @@ package com.sparrow;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import org.junit.After;
 import org.junit.Test;
-
-import com.sparrow.kit.IOKit;
-import com.sparrow.route.RouteHandler;
 
 public class SparrowTest {
 
+	@After
+	public void after() {
+		
+		try {
+			Thread.sleep(60000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	public void testStart() {
 //		Sparrow.me().addPackages("com.test").start();
 //		
 		Sparrow.me().addConfig("app.properties").start().await();
-		
 		
 //		Sparrow.me().get("/", new RouteHandler() {
 //			
