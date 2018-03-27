@@ -1,6 +1,6 @@
 package com.test.handler;
 
-import com.sparrow.anno.Bean;
+import com.sparrow.ioc.annotation.Bean;
 import com.sparrow.mvc.template.DefaultTemplateEngine;
 
 @Bean("templateEngine")

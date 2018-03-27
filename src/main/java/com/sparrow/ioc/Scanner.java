@@ -8,7 +8,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sparrow.anno.Bean;
+import com.sparrow.ioc.annotation.Bean;
 import com.sparrow.kit.FileKit;
 import com.sparrow.kit.ReflectKit;
 import com.sparrow.kit.StringKit;

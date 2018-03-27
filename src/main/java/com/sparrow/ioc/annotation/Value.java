@@ -1,14 +1,14 @@
-package com.sparrow.anno;
+package com.sparrow.ioc.annotation;
 
-import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
-@Target(TYPE)
-@Bean
-public @interface Controller {
+@Target(FIELD)
+public @interface Value {
 
+	String name() default "";
 }

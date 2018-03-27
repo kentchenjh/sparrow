@@ -1,6 +1,4 @@
-package com.sparrow.aop;
-
-import com.sparrow.mvc.Signature;
+package com.sparrow.mvc;
 
 public interface WebHook {
 

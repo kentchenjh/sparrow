@@ -1,6 +1,6 @@
 package com.sparrow.jdk;
 
-import com.sparrow.anno.Controller;
+import com.sparrow.mvc.annotation.Controller;
 
 @Controller
 public class Contro {

@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sparrow.anno.Path;
 import com.sparrow.kit.CollectionKit;
 import com.sparrow.kit.ReflectKit;
 import com.sparrow.kit.RegexKit;
+import com.sparrow.mvc.annotation.Path;
 import com.sparrow.mvc.http.HttpMethod;
 
 public class RouteManager {

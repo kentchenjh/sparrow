@@ -1,6 +1,6 @@
 package com.test.service;
 
-import com.sparrow.anno.Service;
+import com.sparrow.mvc.annotation.Service;
 
 @Service
 public class TestService {

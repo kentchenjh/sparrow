@@ -1,8 +1,8 @@
 package com.test.aop;
 
-import com.sparrow.anno.Hook;
-import com.sparrow.aop.WebHook;
 import com.sparrow.mvc.Signature;
+import com.sparrow.mvc.WebHook;
+import com.sparrow.mvc.annotation.Hook;
 
 @Hook
 public class SayHiHook implements WebHook{

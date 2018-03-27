@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sparrow.anno.JSON;
 import com.sparrow.kit.JsonKit;
 import com.sparrow.kit.ReflectKit;
 import com.sparrow.kit.web.ResponseKit;
@@ -17,6 +16,7 @@ import com.sparrow.mvc.ModelAndView;
 import com.sparrow.mvc.Signature;
 import com.sparrow.mvc.WebContext;
 import com.sparrow.mvc.adapter.RouteAdapter;
+import com.sparrow.mvc.annotation.JSON;
 import com.sparrow.mvc.handler.ExceptionHandler;
 import com.sparrow.mvc.handler.StaticsHandler;
 import com.sparrow.mvc.http.HttpMethod;

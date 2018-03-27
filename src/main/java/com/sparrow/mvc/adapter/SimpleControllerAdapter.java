@@ -1,8 +1,8 @@
 package com.sparrow.mvc.adapter;
 
-import com.sparrow.anno.Controller;
 import com.sparrow.kit.ReflectKit;
 import com.sparrow.mvc.Signature;
+import com.sparrow.mvc.annotation.Controller;
 import com.sparrow.route.Route;
 
 public class SimpleControllerAdapter implements RouteAdapter {

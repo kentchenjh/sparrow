@@ -1,8 +1,8 @@
 package com.test.bean;
 
-import com.sparrow.anno.Autowired;
-import com.sparrow.anno.Bean;
-import com.sparrow.anno.Value;
+import com.sparrow.ioc.annotation.Autowired;
+import com.sparrow.ioc.annotation.Bean;
+import com.sparrow.ioc.annotation.Value;
 import com.test.controller.TestController;
 
 import lombok.Data;

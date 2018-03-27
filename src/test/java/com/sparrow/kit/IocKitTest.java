@@ -8,10 +8,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sparrow.anno.Controller;
 import com.sparrow.ioc.ClassInfo;
 import com.sparrow.ioc.EasyIoc;
 import com.sparrow.ioc.Ioc;
+import com.sparrow.mvc.annotation.Controller;
 import com.test.controller.TestController;
 import com.test.service.TestService;
 

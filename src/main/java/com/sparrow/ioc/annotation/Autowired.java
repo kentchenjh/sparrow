@@ -1,4 +1,4 @@
-package com.sparrow.anno;
+package com.sparrow.ioc.annotation;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

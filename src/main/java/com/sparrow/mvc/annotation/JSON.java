@@ -1,4 +1,4 @@
-package com.sparrow.anno;
+package com.sparrow.mvc.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,8 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Bean {
+@Target(ElementType.METHOD)
+public @interface JSON {
 
-	String value() default "";
 }

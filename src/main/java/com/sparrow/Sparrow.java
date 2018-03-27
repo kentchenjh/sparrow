@@ -10,17 +10,17 @@ import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.sparrow.anno.Bean;
-import com.sparrow.anno.Controller;
-import com.sparrow.anno.Hook;
 import com.sparrow.ioc.ClassInfo;
 import com.sparrow.ioc.EasyIoc;
 import com.sparrow.ioc.Ioc;
 import com.sparrow.ioc.Scanner;
+import com.sparrow.ioc.annotation.Bean;
 import com.sparrow.kit.CollectionKit;
 import com.sparrow.kit.IocKit;
 import com.sparrow.kit.ReflectKit;
 import com.sparrow.mvc.adapter.RouteAdapter;
+import com.sparrow.mvc.annotation.Controller;
+import com.sparrow.mvc.annotation.Hook;
 import com.sparrow.mvc.handler.ExceptionHandler;
 import com.sparrow.mvc.handler.StaticsHandler;
 import com.sparrow.mvc.http.HttpMethod;
@@ -165,18 +165,14 @@ public class Sparrow {
 			Bean beanAnno = cls.getAnnotation(Bean.class);
 			if(beanAnno.value() != "") {
 				register(beanAnno.value(), cls);
-			}else {
-				register(cls);
 			}
-		}else if(cls.isAnnotationPresent(Hook.class)) {
-			register(cls);
+		}	
+		register(cls);
+		if(cls.isAnnotationPresent(Hook.class)) {
 			String[] paths = cls.getAnnotation(Hook.class).value();
 			Stream.of(paths).forEach(path -> routeManager.addWebHook(cls, path, ioc.getBean(cls.getName())));
 		}else if(cls.isAnnotationPresent(Controller.class)) {
-			register(cls);
 			routeManager.addRoute(cls, ioc.getBean(cls.getName()));
-		} else {
-			register(cls);
 		}
 	}
 	

@@ -6,11 +6,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.sparrow.Env;
-import com.sparrow.anno.Autowired;
-import com.sparrow.anno.Value;
 import com.sparrow.ioc.ClassInfo;
 import com.sparrow.ioc.Ioc;
 import com.sparrow.ioc.Scanner;
+import com.sparrow.ioc.annotation.Autowired;
+import com.sparrow.ioc.annotation.Value;
 
 import lombok.NoArgsConstructor;
 

@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.sparrow.anno.Autowired;
 import com.sparrow.ioc.Father;
+import com.sparrow.ioc.annotation.Autowired;
 
 public class ReflectKitTest {
 

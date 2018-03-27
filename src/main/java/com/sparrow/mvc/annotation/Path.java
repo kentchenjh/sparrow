@@ -1,4 +1,4 @@
-package com.sparrow.anno;
+package com.sparrow.mvc.annotation;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

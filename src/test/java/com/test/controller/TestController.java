@@ -2,11 +2,11 @@ package com.test.controller;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.sparrow.anno.Autowired;
-import com.sparrow.anno.Controller;
-import com.sparrow.anno.JSON;
-import com.sparrow.anno.Path;
+import com.sparrow.ioc.annotation.Autowired;
 import com.sparrow.mvc.ModelAndView;
+import com.sparrow.mvc.annotation.Controller;
+import com.sparrow.mvc.annotation.JSON;
+import com.sparrow.mvc.annotation.Path;
 import com.test.service.TestService;
 
 @Controller
