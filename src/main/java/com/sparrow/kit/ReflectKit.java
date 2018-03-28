@@ -127,6 +127,7 @@ public class ReflectKit {
 			Field field = clazz.getDeclaredField(filedName);
 			injectField(obj, field, value);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		
@@ -136,8 +137,12 @@ public class ReflectKit {
 		
 		try {
 			field.setAccessible(true);
+			System.out.println(value.getClass());
+			System.out.println(field.getType());
+			System.out.println(value.getClass().equals(field.getType()));
 			field.set(obj, value);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}

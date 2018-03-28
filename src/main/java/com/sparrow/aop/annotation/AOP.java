@@ -6,9 +6,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.sparrow.ioc.annotation.Bean;
+
 @Retention(RUNTIME)
 @Target(TYPE)
-public @interface AOP {
+@Bean
+public @interface Aop {
 
-	String[] value() default {"/*"};
+	String[] value();
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.sparrow.kit.CollectionKit;
 import com.sparrow.kit.ReflectKit;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,6 +67,23 @@ public class EasyIoc implements Ioc {
 		return container.values().stream()
 				.map(ClassInfo::getInstance)
 				.collect(Collectors.toList());
+	}
+	
+	/**
+	 * get the bean which implements the 
+	 * specfic interface
+	 * @param type
+	 * @return the bean found first
+	 */
+	public <T> T getBeanByInterface(Class<?> type) {
+		
+		@SuppressWarnings("unchecked")
+		T[] beans = (T[]) container.values().stream()
+						.filter(ci -> ReflectKit.hasInterface(ci.getClazz(), type))
+						.map(ci -> ci.getInstance())
+						.toArray();
+		
+		return CollectionKit.isEmpty(beans) ? null : beans[0];
 	}
 	
 }

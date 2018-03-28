@@ -25,7 +25,12 @@ public class IocKit {
 		Object target = classInfo.getInstance();
 		if(!CollectionKit.isEmpty(fields)) {
 			fields.stream().forEach(f -> {
+				//inject by name
 				Object toInjected = ioc.getBean(f.getType().getName());
+				//inject by type
+				if(null == toInjected) {
+					toInjected = ioc.getBeanByInterface(f.getType());
+				}
 				if(null != toInjected) {
 					ReflectKit.injectField(target, f, toInjected);
 				}
@@ -33,7 +38,7 @@ public class IocKit {
 		}
 	}
 
-	public static void valueInjection(Ioc ioc, Env env, ClassInfo classInfo) {
+	public static void valueInjection(Env env, ClassInfo classInfo) {
 		
 		if(null == classInfo || null == classInfo.getInstance()) return;
 		

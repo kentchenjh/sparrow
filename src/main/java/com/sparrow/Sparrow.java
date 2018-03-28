@@ -10,6 +10,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.sparrow.aop.Aspect;
+import com.sparrow.aop.AspectManager;
+import com.sparrow.aop.annotation.Aop;
 import com.sparrow.ioc.ClassInfo;
 import com.sparrow.ioc.EasyIoc;
 import com.sparrow.ioc.Ioc;
@@ -21,10 +24,13 @@ import com.sparrow.kit.ReflectKit;
 import com.sparrow.mvc.adapter.RouteAdapter;
 import com.sparrow.mvc.annotation.Controller;
 import com.sparrow.mvc.annotation.Hook;
+import com.sparrow.mvc.annotation.Service;
 import com.sparrow.mvc.handler.ExceptionHandler;
 import com.sparrow.mvc.handler.StaticsHandler;
 import com.sparrow.mvc.http.HttpMethod;
 import com.sparrow.mvc.template.TemplateEngine;
+import com.sparrow.proxy.CglibProxyManger;
+import com.sparrow.proxy.JdkProxyManager;
 import com.sparrow.route.RouteHandler;
 import com.sparrow.route.RouteManager;
 import com.sparrow.server.JettyServer;
@@ -47,6 +53,8 @@ public class Sparrow {
 	private Env env = Env.empty();
 	
 	private RouteManager routeManager = new RouteManager();
+	
+	private AspectManager aspectManager = new AspectManager();
 	
 	private Ioc ioc = new EasyIoc();
 	
@@ -146,25 +154,53 @@ public class Sparrow {
 				.map(Scanner::scan)
 				.flatMap(Set::stream)
 				.collect(Collectors.toSet());
+		
 		if(!CollectionKit.isEmpty(classInfos)) {
 			classInfos.stream().map(ClassInfo::getClazz).forEach(this::processClazz);
 		}
 		
+		//aop
+		ioc.getClassInfos().stream()
+			.filter(ci -> 
+				ci.getClazz().isAnnotationPresent(Controller.class) ||
+				ci.getClazz().isAnnotationPresent(Service.class))
+			.forEach(this::aopProxy);
+		
 		//injection for loaded beans
-		ioc.getClassInfos().stream().forEach(classInfo -> {
+		ioc.getClassInfos().forEach(classInfo -> {
 			IocKit.refInjection(ioc, classInfo);
-			IocKit.valueInjection(ioc, env, classInfo);
+			IocKit.valueInjection(env, classInfo);
 		});
 		
 		log.info("ioc container content: {}", ioc.getBeans());
 	}
 	
+	private void aopProxy(ClassInfo ci) {
+		
+		try {
+			Class<?> clazz = ci.getClazz();
+			Object instance = ci.getInstance();
+			
+			if(!CollectionKit.isEmpty(clazz.getInterfaces())) {
+				instance = JdkProxyManager.newAopProxy(instance, aspectManager);
+			} else {
+				instance = CglibProxyManger.newAopProxy(instance, aspectManager);
+			}
+			ci.setInstance(instance);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void processClazz(Class<?> cls) {
+		//drop the class without annotations
+		if(CollectionKit.isEmpty(cls.getAnnotations())) return;
 		
 		if(cls.isAnnotationPresent(Bean.class)) {
 			Bean beanAnno = cls.getAnnotation(Bean.class);
 			if(beanAnno.value() != "") {
 				register(beanAnno.value(), cls);
+				return;
 			}
 		}	
 		register(cls);
@@ -173,6 +209,8 @@ public class Sparrow {
 			Stream.of(paths).forEach(path -> routeManager.addWebHook(cls, path, ioc.getBean(cls.getName())));
 		}else if(cls.isAnnotationPresent(Controller.class)) {
 			routeManager.addRoute(cls, ioc.getBean(cls.getName()));
+		}else if(cls.isAnnotationPresent(Aop.class)) {
+			aspectManager.addAspect(cls, ioc.getBean(cls.getName()));
 		}
 	}
 	

@@ -15,4 +15,6 @@ public interface Ioc {
 	public List<ClassInfo> getClassInfos();
 	
 	public List<Object> getBeans();
+	
+	public <T> T getBeanByInterface(Class<?> type);
 }

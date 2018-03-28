@@ -1,4 +1,4 @@
-package com.test.aop;
+package com.test.hook;
 
 import com.sparrow.mvc.Signature;
 import com.sparrow.mvc.WebHook;
