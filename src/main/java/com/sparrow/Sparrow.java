@@ -10,7 +10,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.sparrow.aop.Aspect;
 import com.sparrow.aop.AspectManager;
 import com.sparrow.aop.annotation.Aop;
 import com.sparrow.ioc.ClassInfo;
@@ -167,9 +166,14 @@ public class Sparrow {
 			.forEach(this::aopProxy);
 		
 		//injection for loaded beans
+		//init route manager
 		ioc.getClassInfos().forEach(classInfo -> {
 			IocKit.refInjection(ioc, classInfo);
 			IocKit.valueInjection(env, classInfo);
+			Class<?> clazz = classInfo.getClazz();
+			if(clazz.isAnnotationPresent(Controller.class)) {
+				routeManager.addRoute(clazz, ioc.getBean(clazz.getName()));
+			}	
 		});
 		
 		log.info("ioc container content: {}", ioc.getBeans());
@@ -207,8 +211,6 @@ public class Sparrow {
 		if(cls.isAnnotationPresent(Hook.class)) {
 			String[] paths = cls.getAnnotation(Hook.class).value();
 			Stream.of(paths).forEach(path -> routeManager.addWebHook(cls, path, ioc.getBean(cls.getName())));
-		}else if(cls.isAnnotationPresent(Controller.class)) {
-			routeManager.addRoute(cls, ioc.getBean(cls.getName()));
 		}else if(cls.isAnnotationPresent(Aop.class)) {
 			aspectManager.addAspect(cls, ioc.getBean(cls.getName()));
 		}

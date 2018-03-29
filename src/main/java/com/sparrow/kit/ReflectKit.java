@@ -137,9 +137,6 @@ public class ReflectKit {
 		
 		try {
 			field.setAccessible(true);
-			System.out.println(value.getClass());
-			System.out.println(field.getType());
-			System.out.println(value.getClass().equals(field.getType()));
 			field.set(obj, value);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -8,15 +8,15 @@ import com.sparrow.mvc.annotation.Controller;
 import com.sparrow.mvc.annotation.JSON;
 import com.sparrow.mvc.annotation.Path;
 import com.test.service.NonInterfaceService;
-import com.test.service.TestService;
+import com.test.service.TestServiceI;
 
 @Controller
 public class TestController {
 
 	static AtomicInteger count = new AtomicInteger(0);
 	
-//	@Autowired
-	TestService testSerivce;
+	@Autowired
+	TestServiceI testSerivce;
 
 	@Autowired
 	NonInterfaceService nonInterfaceService;
@@ -27,16 +27,16 @@ public class TestController {
 		return "This is homepage";
 	}
 	
-	@Path("/insertUser")
+	@Path("/newUser")
 	@JSON
-	public String insertUser() {
-		testSerivce.insertUser();
-		return "insertUser";
+	public String newUser() {
+		nonInterfaceService.insertUser();
+		return "nonInterfaceService insert User";
 	}
 	
-	@Path("/insertBook")
+	@Path("/newBook")
 	@JSON
-	public String insertBook() {
+	public String newBook() {
 		testSerivce.insertBook();
 		return "insertBook";
 	}

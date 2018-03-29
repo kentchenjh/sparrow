@@ -80,6 +80,7 @@ public class RequestExecution {
 			this.processResult(signature, result);
 		} catch (Exception e) {
 			if (e instanceof InvocationTargetException) e = (Exception) e.getCause();
+			e.printStackTrace();
 			EXCEPTION_HANDLER.handleException(e, signature);
 		}
 	}

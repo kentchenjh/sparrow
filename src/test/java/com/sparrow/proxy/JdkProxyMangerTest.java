@@ -27,7 +27,6 @@ public class JdkProxyMangerTest {
 		TestAspect ta = new TestAspect();
 		TestServiceAspect tsa = new TestServiceAspect();
 		
-		
 		m.addAspect(TestAspect.class, ta);
 		m.addAspect(TestAspect.class, tsa);
 		

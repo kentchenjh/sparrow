@@ -10,6 +10,9 @@ import com.sparrow.aop.annotation.Aop;
 import com.sparrow.kit.CollectionKit;
 import com.sparrow.kit.RegexKit;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class AspectManager {
 
 	private Map<String, Aspect> aspectMap = new HashMap<>();
@@ -29,11 +32,21 @@ public class AspectManager {
 	}
 	
 	private List<Aspect> getAspectByRegex(String path) {
+
+		List<Aspect> aspects = aspectMap.entrySet().stream()
+				.filter(e -> {
+					log.info("regex : {}", RegexKit.pathToRegex(e.getKey()));
+					return RegexKit.match(RegexKit.pathToRegex(e.getKey()), path);
+				})
+				.map(e -> {
+					log.info("match : {}", e.getValue());
+					return e.getValue();
+				})
+				.collect(Collectors.toList());
 		
-		return aspectMap.entrySet().stream()
-			.filter(e -> RegexKit.match(RegexKit.pathToRegex(e.getKey()), path))
-			.map(e -> e.getValue())
-			.collect(Collectors.toList());
+		
+		
+		return aspects;
 	}
 }
 

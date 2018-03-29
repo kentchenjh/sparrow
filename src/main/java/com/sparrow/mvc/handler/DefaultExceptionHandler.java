@@ -19,7 +19,7 @@ public class DefaultExceptionHandler implements ExceptionHandler{
 		try {
 			writer = response.getWriter();
 			response.setStatus(500);
-			writer.write(e.getMessage());
+			writer.write(e.getMessage() == null ? "unknown reason" : e.getMessage());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 			IOKit.closeQuietly(writer);

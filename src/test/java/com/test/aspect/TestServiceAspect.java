@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import com.sparrow.aop.Aspect;
 import com.sparrow.aop.annotation.Aop;
 
-@Aop("com.service.insert*")
+@Aop("com.test.service.*.insert*")
 public class TestServiceAspect implements Aspect{
 
 	@Override
